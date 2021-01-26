@@ -1,17 +1,44 @@
 {% load static %}
+{% load bootstrap4 %}
 <html>
 	<head>
+		{% bootstrap_css %}
+		{% bootstrap_javascript jquery="slim" %}
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="{% static 'css/bank_account_data_list.css'%}">
 	</head>
 
 	<body>
-		<div class="header">
-			<h1><a href="/">PB System</a></h1>
-		</div>
+		<nav class="navbar navbar-expand-lg navbar-light">
+			<a href="/" class="navbar-brand">PB System</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="navbar-nav mr-auto">
+					
+					<!-- 左にメニューを出すとき-->
+					{% if user.is_authenticated %}
+					{% endif %}
+				</ul>
+
+				<ul class="navbar-nav">
+					<!-- 右にメニューを出すとき -->
+					{% if user.is_authenticated %}
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'logout'%}">Log Out</a>
+						</li>
+					{% else %}
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'login'%}">Log In</a>
+						</li>
+					{% endif %}
+				</ul>
+			</div>
+		</nav>
 
 		<div class="content container">
-			<h2><a href="/">Cumtomer List</a></h2>
 			{% block content %}
 			{% endblock %}
 		</div>
