@@ -1,9 +1,21 @@
-<div>
-	<h1><a href="/">PB System</a></h1>
-</div>
+{% load static %}
+<html>
+	<head>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{% static 'css/bank_account_data_list.css'%}">
+	</head>
 
-{% for data in bankaccountdata_list %}
-	<div>
-		<p>bank account : {{data.bank_accounts}}</p>
-	</div>
-{% endfor %}
+	<body>
+		<div class="header">
+			<h1><a href="/">PB System</a></h1>
+		</div>
+
+		<div class="content container">
+			{% for data in bankaccountdata_list %}
+			<div>
+				<p>bank account : {{data.bank_accounts}}</p>
+			</div>
+		{% endfor %}
+		</div>
+	</body>
+</html>
