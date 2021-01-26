@@ -1,6 +1,8 @@
 {% extends "PBSystem/base.html" %}
 
 {% block content %}
+	{% if user.is_authenticated %}
+	<h2><a href="/">Cumtomer List</a></h2>
 	<div class="table-responsive">
 		<table class="table table-striped table-sm">
 			<thead>
@@ -28,4 +30,7 @@
 			{% endfor %}
 		</table>
 	</div>
+	{% else %}
+		<h2>Please Log In</h2>
+	{% endif %}
 {% endblock %}
