@@ -26,9 +26,9 @@ class CustomerList(models.Model):
 
 class BankAccounts(models.Model):
 	"""
-		customer: お客さんの名前   from CustomerList
-		match: 二人の入力した情報があっているかいないか
-		wether_complete: コンプリートにされているかされてないか
+		#customer: お客さんの名前   from CustomerList
+		#match: 二人の入力した情報があっているかいないか
+		#wether_complete: コンプリートにされているかされてないか
 
 	"""
 	# foreignkey
@@ -95,7 +95,7 @@ class UserInfo(models.Model):
 
 class BankAccountData(models.Model):
 	"""
-		bank_accounts: 
+		custome 
 		banks: ベトナムの銀行のベトナム語バージョンと英語バージョン
 		user_info: ユーザーの情報
 		bank_branch_name: 銀行の支店名
@@ -115,14 +115,10 @@ class BankAccountData(models.Model):
 	bank_address = models.TextField()
 	banker_1 = models.CharField(blank=False,null=False,max_length=200)
 	banker_2 = models.CharField(blank=True,null=True,max_length=200)
-	reg_date = models.DateTimeField(blank=True,null=True,)
+	reg_date = models.DateTimeField(default=timezone.now)
 	bank_account = models.CharField(max_length=200)
 	bank_account_holder = models.CharField(max_length=200)
 
-
-	def reg_date(self):
-		self.reg_date = timezone.now()
-		self.save
 
 
 

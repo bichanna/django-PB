@@ -1,0 +1,19 @@
+{% load static %}
+<html>
+	<head>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{% static 'css/bank_account_data_list.css'%}">
+	</head>
+
+	<body>
+		<div class="header">
+			<h1><a href="/">PB System</a></h1>
+		</div>
+
+		<div class="content container">
+			<h2><a href="/">Cumtomer List</a></h2>
+			{% block content %}
+			{% endblock %}
+		</div>
+	</body>
+</html>
