@@ -77,7 +77,7 @@ class UserInfo(models.Model):
 		created: ユーザーが作られた日付
 	"""
 	# foreignkeys
-	#user = # djangoにもともとあるUserテーブルから必要な情報だけをリンクさせる。username, email, and password. Userを作り始めてから書き直す。
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)# djangoにもともとあるUserテーブルから必要な情報だけをリンクさせる。username, email, and password. Userを作り始めてから書き直す。
 	user_type = models.ForeignKey(UserType,on_delete=models.CASCADE)
 
 	short_name = models.CharField(max_length=5)  # 仮決め 

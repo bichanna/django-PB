@@ -27,6 +27,14 @@
 					<!-- 右にメニューを出すとき -->
 					{% if user.is_authenticated %}
 						<li class="nav-item">
+							<a class="nav-link" href="{% url 'accounts:user_detail' user.pk %}">User Info</a>
+						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'accounts:user_update' user.pk %}">User Info Update</a>
+						</li>
+						
+						<li class="nav-item">
 							<a class="nav-link" href="{% url 'logout'%}">Log Out</a>
 						</li>
 					{% else %}

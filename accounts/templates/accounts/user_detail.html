@@ -1,0 +1,20 @@
+{% extends "PBSystem/base.html" %}
+{% block content %}
+
+<table class = "table">
+	<tbody>
+		<tr>
+			<th>User Name</th>
+			<td>{{ user.username }}</td>
+		</tr>
+		<tr>
+			<th>E-mail</th>
+			<td>{{ user.email }}</td>
+		</tr>
+		<tr>
+			<th>Short Name</th>
+			<td>{{ UserInfo.short_name}}</td>
+		</tr>
+	</tbody>
+</table>
+{% endblock %}
