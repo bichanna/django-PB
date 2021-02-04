@@ -8,7 +8,7 @@
 
 from django.forms import ModelForm
 from django import forms
-from .models import CustomerList,BankAccounts,Banks,UserType,UserInfo,BankAccountData
+from .models import CustomerList,BankAccounts,Banks,UserType,User,BankAccountData
 
 class BankAccountDataForm(ModelForm):
 	"""

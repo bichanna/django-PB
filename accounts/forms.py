@@ -8,18 +8,28 @@
 
 from django.forms import ModelForm
 from django.contrib.auth.models import User
-from PBSystem.models import UserInfo
+from PBSystem.models import User
+from django import forms
 
 class UserUpdateForm(ModelForm):
-	"""ユーザー情報更新フォーム"""
+	""""""
 	class Meta:
-		model = UserInfo
-		fields = ("short_name")
+		
 		model = User
-		fields = ("email", "username")
-
+		fields = ("username","short_name","email")
+		
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		for field in self.fields.values():
 			field.widget.attrs['class'] = 'form-control'
 
+
+
+
+"""
+class UserUpdateForm(forms.Form):
+	short_name = forms.CharField(label="Short Name",required=False)
+	email = forms.CharField(label="E-mail",required=False)
+	username = forms.CharField(label="User Name",required=False)
+
+"""

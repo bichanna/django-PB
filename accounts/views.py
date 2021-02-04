@@ -14,6 +14,7 @@ from .forms import UserUpdateForm
 from django.contrib.auth.models import User
 from django.shortcuts import resolve_url
 from django.urls import reverse_lazy
+from PBSystem.models import User
 
 # Create your views here.
 class OnlyYouMixin(UserPassesTestMixin):
