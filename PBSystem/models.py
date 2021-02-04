@@ -9,6 +9,9 @@ PBSystem application
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
+from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import PermissionsMixin, UserManager
+from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
 
@@ -66,9 +69,36 @@ class UserType(models.Model):
 	def __str__(self):
 		return str(self.user_type)
 
+from django.contrib.auth.models import PermissionsMixin, UserManager
+
+class CustomUserManager(UserManager):
+    """ユーザーマネージャー"""
+    use_in_migrations = True
+
+    def _create_user(self, username, password, **extra_fields):
+        user = self.model(username=username, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_user(self, username, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)        
+        return self._create_user(username, password, **extra_fields)
+
+    def create_superuser(self, username, password, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+        return self._create_user(username, password, **extra_fields)
 
 
-class UserInfo(models.Model):
+
+
+class User(AbstractBaseUser,PermissionsMixin):
 	"""
 		user: djangoのデータベースにあるユーザーテーブルに情報を足す
 		user_type: ユーザーのタイプ
@@ -77,12 +107,14 @@ class UserInfo(models.Model):
 		created: ユーザーが作られた日付
 	"""
 	# foreignkeys
-	#user = # djangoにもともとあるUserテーブルから必要な情報だけをリンクさせる。username, email, and password. Userを作り始めてから書き直す。
-	user_type = models.ForeignKey(UserType,on_delete=models.CASCADE)
+	user_type = models.ForeignKey(UserType,on_delete=models.CASCADE,null=True,default=None,blank=True)
+	email = models.EmailField(unique=True)
+	username = models.CharField(unique=True,max_length=200)
 
 	short_name = models.CharField(max_length=5)  # 仮決め 
 	modified = models.DateTimeField(blank=True,null=True)
-	created = models.DateTimeField(default=timezone.now)
+	date_joined = models.DateTimeField(default=timezone.now)
+	objects = CustomUserManager()
 
 	def modified(self):
 		self.modified = timezone.now()
@@ -90,6 +122,16 @@ class UserInfo(models.Model):
 
 	def __str__(self):
 		return str(self.short_name) + "   type: " + str(self.user_type)
+
+	EMAIL_FIELD = "email"
+	USERNAME_FIELD = "username"
+
+	is_staff = models.BooleanField(
+        _('staff status'),
+        default=False,
+        help_text=_('Designates whether the user can log into this admin site.'),
+    )
+
 
 
 
@@ -109,7 +151,7 @@ class BankAccountData(models.Model):
 	# foreignkeys
 	bank_accounts = models.ForeignKey(BankAccounts,on_delete=models.CASCADE)
 	banks = models.ForeignKey(Banks,on_delete=models.CASCADE)
-	user_info = models.ForeignKey(UserInfo,on_delete=models.CASCADE)
+	user_info = models.ForeignKey(User,on_delete=models.CASCADE)
 
 	bank_branch_name = models.CharField(max_length=200)
 	bank_address = models.TextField()

@@ -9,7 +9,7 @@
 from django.shortcuts import render, reverse, get_object_or_404
 from django.views.generic import View,ListView
 from django.utils import timezone
-from .models import CustomerList,BankAccounts,Banks,UserType,UserInfo,BankAccountData
+from .models import CustomerList,BankAccounts,Banks,UserType,User,BankAccountData
 from .forms import BankAccountDataSearchForm
 from django.db.models import Q
 """

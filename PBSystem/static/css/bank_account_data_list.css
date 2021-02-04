@@ -3,14 +3,14 @@ h1 a, h2 a {
 }
 
 .header {
-	background-color:#d9d9d9;
+	background-color:#bebebe;
 	width: 100%;
 	padding: 20px, 20px, 20px, 40px; 
 }
 
 
 html {
-	font-size: 100%;
+	font-size: 62.5%;
 }
 
 body {
@@ -34,7 +34,7 @@ body {
 
 .navbar {
 	font-size: 2.0rem;
-	background-color: rgba(222,120,31,1);
+	background-color: #bebebe;
 	color: rgba(255,255,255,1);
 	padding: 20px 20px 20px 40px;
 }
@@ -47,13 +47,18 @@ body {
 }
 
 .navbar-light .navbar-nav .nav-link {
-	background-color: #bebebe;
+	background-color: rgba(190, 190, 190, 1);
 	color: rgba(255,255,255,1);
 }
 
 .navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
-	background-color: #bebebe;
+	background-color: rgba(190, 190, 190, .5);
 	color: rgba(255,255,255,1);
+}
+
+
+.PBSystem h2 a, .post h2 a:visited {
+	color: #000000;
 }
 
 
