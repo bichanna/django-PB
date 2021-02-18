@@ -1,0 +1,30 @@
+{% extends "PBSystem/base.html" %}
+{% block content %}
+	{% if user.is_authenticated %}
+	<h2><a href="/">{{ status }} List</a></h2>
+	<div class="table-responsive">
+		<table class="table table-striped table-sm">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>User Name</th>
+					<th>Short Name</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			{% for data in user_list %}
+				<tbody>
+					<tr>
+						<td>{{ data.id }}</td>
+						<td>{{ data.username }}</td>
+						<td>{{ data.short_name }}</td>
+						<td><a href="{% url 'PBSystem:edit' data.id %}">Edit</a> | <a href="{% url 'PBSystem:delete' data.id %}">Delete</a></td>
+					</tr>
+				</tbody>
+			{% endfor %}
+		</table>
+	</div>
+	{% else %}
+		<h2>Please Log In</h2>
+	{% endif %}
+{% endblock%}

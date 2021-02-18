@@ -7,11 +7,12 @@
 """
 
 from django.shortcuts import render, reverse, get_object_or_404
-from django.views.generic import View,ListView
+from django.views.generic import View,ListView,DeleteView,UpdateView
 from django.utils import timezone
 from .models import CustomerList,BankAccounts,Banks,UserType,User,BankAccountData
-from .forms import BankAccountDataSearchForm
+from .forms import BankAccountDataSearchForm,BankAccountDataForm
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
 """
 class PBSystemBankAccountDataListView(View):
 	def get(self, request, *args, **kwargs):
@@ -64,6 +65,67 @@ class PBSystemBankAccountDataListView(ListView):
 		return context
 
 bank_account_data_list = PBSystemBankAccountDataListView.as_view()
+
+
+class AdminUserListListView(ListView):
+	"""
+		admin listとuser listのページ用
+	"""
+	model = User
+	template_name = "PBSystem/admin_user_list_list.html"
+	paginate_by = 8
+
+	def get_queryset(self):
+		status = self.request.GET.get('usertype')
+		queryset = super().get_queryset()
+		queryset = queryset.filter(user_type__user_type=status)
+		print(queryset)
+		return queryset
+
+	def get_context_data(self, **kwargs):
+		"""
+			コンテキストの設定。
+		"""
+
+		context = super().get_context_data(**kwargs)
+		status = self.request.GET.get('usertype')
+		context["status"] = status
+		#print("CONTEXT  ", context)
+		return context
+admin_user_list_list = AdminUserListListView.as_view()
+
+
+
+class PBSystemUpdateView(LoginRequiredMixin, UpdateView):
+	"""
+		変更ページのビュー
+	"""
+	model = BankAccountData
+	form_class = BankAccountDataForm
+	template_name = "PBSystem/update.html"
+
+	def get_success_url(self):
+		"""詳細画面にリダイレクトする。"""
+		return reverse("PBSystem:bank_account_data_list")
+
+
+class PBSystemDeleteView(LoginRequiredMixin, DeleteView):
+	"""
+		削除用のビュー
+	"""
+	model = BankAccountData
+	template_name = "PBSystem/delete.html"
+	def get_success_url(self):
+		"""一覧ページにリダイレクトする。"""
+		return reverse("PBSystem:bank_account_data_list")
+
+
+
+
+
+
+
+
 
 
 
