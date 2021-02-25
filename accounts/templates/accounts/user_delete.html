@@ -1,0 +1,14 @@
+{% extends "PBSystem/base.html" %}
+{% load bootstrap4 %}
+
+
+{% block content %}
+<form method="post">
+	{% csrf_token %}
+	<p>削除しても良いですか？</p>
+	<button type="submit" class="btn btn-danger btn-lg">delete</button>
+</form>
+<div class="mt-3 mb-5">
+	<a class="btn btn-primary btn-lg" href="{% get_return_link request %}">return</a>
+</div>
+{% endblock %}
