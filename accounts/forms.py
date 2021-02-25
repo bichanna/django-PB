@@ -26,6 +26,7 @@ class UserUpdateForm(ModelForm):
 
 
 
+
 """
 class UserUpdateForm(forms.Form):
 	short_name = forms.CharField(label="Short Name",required=False)

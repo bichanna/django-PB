@@ -9,7 +9,7 @@
 
 from django.contrib.auth.views import PasswordChangeView,PasswordChangeDoneView
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.views.generic import DetailView, UpdateView, CreateView
+from django.views.generic import DetailView, UpdateView, CreateView, DeleteView, View
 from .forms import UserUpdateForm
 from django.contrib.auth.models import User
 from django.shortcuts import resolve_url
@@ -50,7 +50,15 @@ class UserUpdate(OnlyYouMixin,UpdateView):
 		"""
 			更新後の表示をする画面。ユーザーの詳細を表示する画面に遷移する。
 		"""
-		return resolve_url("accounts:user_detail",pk=self.kwargs["pk"])
+		return resolve_url("PBSystem:bank_account_data_list",)
+
+class UserDelete(OnlyYouMixin, View):
+	def get(self, request, *args, **kwargs):
+		print("⭐"*10)
+		print(User.objects.filter(id=1))
+		#user = User.objects.get(id=kwargs["pk"])
+		#user.delete()
+
 
 
 """

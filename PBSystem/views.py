@@ -79,7 +79,6 @@ class AdminUserListListView(ListView):
 		status = self.request.GET.get('usertype')
 		queryset = super().get_queryset()
 		queryset = queryset.filter(user_type__user_type=status)
-		print(queryset)
 		return queryset
 
 	def get_context_data(self, **kwargs):
@@ -93,32 +92,6 @@ class AdminUserListListView(ListView):
 		#print("CONTEXT  ", context)
 		return context
 admin_user_list_list = AdminUserListListView.as_view()
-
-
-
-class PBSystemUpdateView(LoginRequiredMixin, UpdateView):
-	"""
-		変更ページのビュー
-	"""
-	model = BankAccountData
-	form_class = BankAccountDataForm
-	template_name = "PBSystem/update.html"
-
-	def get_success_url(self):
-		"""詳細画面にリダイレクトする。"""
-		return reverse("PBSystem:bank_account_data_list")
-
-
-class PBSystemDeleteView(LoginRequiredMixin, DeleteView):
-	"""
-		削除用のビュー
-	"""
-	model = BankAccountData
-	template_name = "PBSystem/delete.html"
-	def get_success_url(self):
-		"""一覧ページにリダイレクトする。"""
-		return reverse("PBSystem:bank_account_data_list")
-
 
 
 
