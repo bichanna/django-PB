@@ -7,7 +7,7 @@
 """
 
 from django.shortcuts import render, reverse, get_object_or_404
-from django.views.generic import View,ListView,DeleteView,UpdateView
+from django.views.generic import View,ListView,DeleteView,UpdateView, CreateView
 from django.utils import timezone
 from .models import CustomerList,BankAccounts,Banks,UserType,User,BankAccountData
 from .forms import BankAccountDataSearchForm,BankAccountDataForm
@@ -73,10 +73,11 @@ class AdminUserListListView(ListView):
 	"""
 	model = User
 	template_name = "PBSystem/admin_user_list_list.html"
-	paginate_by = 8
+	paginate_by = 10
 
 	def get_queryset(self):
 		status = self.request.GET.get('usertype')
+		print(status, "⭐"*10)
 		queryset = super().get_queryset()
 		queryset = queryset.filter(user_type__user_type=status)
 		return queryset
@@ -92,6 +93,55 @@ class AdminUserListListView(ListView):
 		#print("CONTEXT  ", context)
 		return context
 admin_user_list_list = AdminUserListListView.as_view()
+
+
+
+
+class CreateNewCustomerView(LoginRequiredMixin, CreateView):
+	model = "BankAccountData"
+	template_name = "PBSystem/new_customer_creation.html"
+	form_class = BankAccountDataForm
+
+	def form_valid(self, form):
+		print("⭐"*10)
+		print(self.request.user.id)
+		print(User.objects.get(id=self.request.user.id))
+		print(form.instance)
+		user_id = User.objects.get(id=self.request.user.id)
+
+		form.instance.user_info = user_id
+		return super().form_valid(form)
+
+	def get_success_url(self):
+		"""詳細画面にリダイレクトする。"""
+		return reverse("PBSystem:bank_account_data_list",)
+
+
+
+create_new_customer = CreateNewCustomerView.as_view()
+
+
+
+class BankAccountDataDelete(LoginRequiredMixin, DeleteView):
+	model = BankAccountData
+	template_name = "PBSystem/bank_account_data_delete.html"
+	def get_success_url(self):
+		"""一覧ページにリダイレクトする。"""
+		return reverse("PBSystem:bank_account_data_list")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

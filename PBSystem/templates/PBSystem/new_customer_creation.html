@@ -1,0 +1,22 @@
+{% extends "PBSystem/base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+	<form method="post">
+		{% csrf_token %}
+		{% bootstrap_form_errors form type='non_fields' %}
+		{% bootstrap_field form.bank_accounts placeholder="Tên khách" %}
+		{% bootstrap_field form.banks placeholder="Tên ngân hàng" %}
+		<p class="caution">- Giữa đơn vị hành chính nhập “phẩy (,)” và một khoản cách. Sau con số không nhập “phẩy (,)”. Ví dụ: 26 Lệ Lợi, Thái Bình </p>
+		<p class="caution">- Khi nhập địa chỉ, không nhập tên phân loại như "xã", "quận", "tỉnh" v.v.</p>
+		<p class="caution">- Nếu trên tài liệu không có tên người phía ngân hàng, không cần nhập.</p>
+		{% bootstrap_field form.bank_branch_name placeholder="Chi nhánh" %}
+		{% bootstrap_field form.bank_address placeholder="Địa chỉ chi nhánh" %}
+		{% bootstrap_field form.bank_account placeholder="Số tài khoản" %}
+		{% bootstrap_field form.banker_1 placeholder="Tên người phía ngân hàng 1" %}
+		{% bootstrap_field form.banker_2 placeholder="Tên người phía ngân hàng 2" %}
+		{% bootstrap_field form.bank_account_holder placeholder="Chủ tài khỏan" %}
+		{% bootstrap_field form.date placeholder="Ngày tháng năm" %}
+		<button type="submit" class="btn btn-primary btn-lg">Save Finish</button>
+	</form>
+{% endblock %}

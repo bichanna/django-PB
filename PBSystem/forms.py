@@ -18,8 +18,17 @@ class BankAccountDataForm(ModelForm):
 		#モデルクラスを指定
 		model = BankAccountData
 		#モデルフィールドを指定
-		fields = ()
+		fields = ("bank_accounts", "banks", "bank_branch_name", "bank_address", "banker_1", "banker_2", "bank_account", "bank_account_holder", "date")
 		labels = {
+			"bank_accounts": "Tên khách",
+			"banks": "Tên ngân hàng",
+			"bank_branch_name": "Chi nhánh",
+			"bank_address": "Địa chỉ chi nhánh",
+			"bank_account": "Số tài khoản",
+			"banker_1": "Tên người phía ngân hàng 1",
+			"banker_2": "Tên người phía ngân hàng 2",
+			"bank_account_holder": "Chủ tài khỏan",
+			"date": "Ngày tháng năm",
 		}
 
 

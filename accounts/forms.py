@@ -7,9 +7,10 @@
 """
 
 from django.forms import ModelForm
-from django.contrib.auth.models import User
+
 from PBSystem.models import User
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 
 class UserUpdateForm(ModelForm):
 	""""""
@@ -22,6 +23,14 @@ class UserUpdateForm(ModelForm):
 		super().__init__(*args, **kwargs)
 		for field in self.fields.values():
 			field.widget.attrs['class'] = 'form-control'
+
+class UserCreateForm(UserCreationForm):
+	"""
+		ユーザー作成用フォーム
+	"""
+	class Meta(UserCreationForm.Meta):
+		model = User
+		fields = ("username", "short_name", "email")
 
 
 

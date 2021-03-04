@@ -13,5 +13,7 @@ from . import views
 app_name = "PBSystem"  # application name
 urlpatterns = [
 	path("", views.bank_account_data_list, name="bank_account_data_list"),
-	path("admin_user_list/<int>",views.admin_user_list_list, name="admin_user_list_list"),
+	path("admin_user_list/",views.admin_user_list_list, name="admin_user_list_list"),
+	path("create_new_customer/", views.create_new_customer, name="new_customer"),
+	path("bank_account_data_deletion/", views.bank_account_data_deletion, name="bank_account_data_delete"),
 ]
