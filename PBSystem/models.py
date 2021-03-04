@@ -111,7 +111,7 @@ class User(AbstractBaseUser,PermissionsMixin):
 	email = models.EmailField(unique=True)
 	username = models.CharField(unique=True,max_length=200)
 
-	short_name = models.CharField(max_length=5)  # 仮決め 
+	short_name = models.CharField(max_length=5)
 	modified = models.DateTimeField(blank=True,null=True)
 	date_joined = models.DateTimeField(default=timezone.now)
 	objects = CustomUserManager()
@@ -121,7 +121,7 @@ class User(AbstractBaseUser,PermissionsMixin):
 		self.save
 
 	def __str__(self):
-		return str(self.short_name) + "   type: " + str(self.user_type)
+		return str(self.id) + str(self.short_name) + "   type: " + str(self.user_type)
 
 	EMAIL_FIELD = "email"
 	USERNAME_FIELD = "username"
@@ -158,6 +158,7 @@ class BankAccountData(models.Model):
 	banker_1 = models.CharField(blank=False,null=False,max_length=200)
 	banker_2 = models.CharField(blank=True,null=True,max_length=200)
 	reg_date = models.DateTimeField(default=timezone.now)
+	date = models.DateTimeField(blank=False, null=False, default=timezone.now)
 	bank_account = models.CharField(max_length=200)
 	bank_account_holder = models.CharField(max_length=200)
 

@@ -10,13 +10,37 @@
 from django.contrib.auth.views import PasswordChangeView,PasswordChangeDoneView
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import DetailView, UpdateView, CreateView, DeleteView, View
-from .forms import UserUpdateForm
+from .forms import UserUpdateForm, UserCreateForm
 from django.contrib.auth.models import User
-from django.shortcuts import resolve_url
+from django.shortcuts import resolve_url, reverse, render
 from django.urls import reverse_lazy
-from PBSystem.models import User
+from PBSystem.models import User, UserType
 
-# Create your views here.
+
+class UserCreate(CreateView):
+	"""
+		ユーザー作成用のビュー
+	"""
+	template_name = "registration/user_create.html"
+	form_class = UserCreateForm
+	model = User
+
+	def form_valid(self, form):
+
+		usertype = UserType.objects.get(user_type=self.request.GET.get("usertype"))
+		
+		form.instance.user_type = usertype
+
+		return super().form_valid(form)
+
+
+	def get_success_url(self):
+		"""詳細画面にリダイレクトする。"""
+		return reverse("PBSystem:bank_account_data_list",)
+
+
+
+
 class OnlyYouMixin(UserPassesTestMixin):
 	raise_exception = True
 
@@ -53,21 +77,13 @@ class UserUpdate(OnlyYouMixin,UpdateView):
 		return resolve_url("PBSystem:bank_account_data_list",)
 
 class UserDelete(OnlyYouMixin, View):
+	template_name = "PBSystem/admin_user_list_list.html"
 	def get(self, request, *args, **kwargs):
-		print("⭐"*10)
-		print(User.objects.filter(id=1))
-		#user = User.objects.get(id=kwargs["pk"])
-		#user.delete()
+	
+		User.objects.get(id=kwargs["pk"]).delete()
+		return render(request, self.template_name)
 
 
 
-"""
-class UserCreate(CreateView):
-"""
-		#ユーザー作成用のビュー
-"""
-	template_name="registration/user_create.html"
-	form_class=UserCreateForm
-	success_url = reverse_lazy("login")
-"""
+
 

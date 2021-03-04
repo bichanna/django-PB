@@ -18,14 +18,13 @@
 			<div class="collapse navbar-collapse" id="navbarNavDropdown">
 				<ul class="navbar-nav mr-auto">
 					<!-- 左にメニューを出すとき-->
-					{% if user.is_authenticated and user.user_type.user_type == "superadmin"%}                                            <!-- 型でしょ　探してるのは-->
-						
+					{% if user.is_authenticated and user.user_type.user_type == "superadmin"%}                                          <!-- 型でしょ-->
 						<li class="nav-item">
-							<a class="nav-link" href="{% url 'PBSystem:admin_user_list_list' 1 %} ?usertype=admin">Admin List</a>
+							<a class="nav-link" href="{% url 'PBSystem:admin_user_list_list'%}?usertype=admin">Admin List</a>
 						</li>
 						
 						<li class="nav-item">
-							<a class="nav-link" href="{% url 'PBSystem:admin_user_list_list' 1 %} ?usertype=user">User List</a>
+							<a class="nav-link" href="{% url 'PBSystem:admin_user_list_list'%}?usertype=user">User List</a>
 						</li>
 						
 					{% endif %}
@@ -60,13 +59,6 @@
 		</div>
 	</body>
 </html>
-
-
-
-
-
-
-
 
 
 

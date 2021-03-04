@@ -30,6 +30,9 @@ body {
 	text-decoration: none;
 } 
 
+.caution {
+	color:red;
+}
 
 
 .navbar {
@@ -49,8 +52,9 @@ body {
 .navbar-light .navbar-nav .nav-link {
 	background-color: rgba(190, 190, 190, 1); /* gray */
 	color: rgba(255,255,255,1);  /* white */
-	border-bottom: 1px solid #000;    /*  ここ変えた  */
-	border-radius: 30,30,30,30 ;
+	transition: background-color 0.2s;
+	transition: color 0.2s;
+	border-radius: 10px;
 }
 
 .navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
