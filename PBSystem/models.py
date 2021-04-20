@@ -15,15 +15,16 @@ from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
 
+
+
 class CustomerList(models.Model):
 	"""
 		customer_name: お客さんの名前
 	"""
-	customer_name = models.CharField(max_length=200)
+	customer_name = models.CharField(max_length=290)
 
 	def __str__(self):
 		return str(self.customer_name)
-
 
 
 
@@ -35,22 +36,19 @@ class BankAccounts(models.Model):
 
 	"""
 	# foreignkey
-	customer = models.ForeignKey(CustomerList,on_delete=models.CASCADE)
-	
+	bank_account_number = models.CharField(max_length=1000)
+	customer_name = models.ForeignKey(CustomerList, on_delete=models.CASCADE)
 	match = models.BooleanField(default=False)
 	wether_complete = models.BooleanField(default=False)
 
 	def __str__(self):
-		return str(self.customer) + " : " + str(self.match) + " : " + str(self.wether_complete)
-
-
-
+		return str(self.customer_name) + " : " + str(self.bank_account_number)
 
 
 class Banks(models.Model):
 	"""
-		bank_name_Viet: ベトナム語の銀行の名前
-		bank_name_En: 英語の銀行の名前
+		bank_name_Viet: 
+		bank_name_En: 
 	"""
 	bank_name_Viet = models.CharField(max_length=200)
 	bank_name_En = models.CharField(max_length=200)
@@ -121,7 +119,7 @@ class User(AbstractBaseUser,PermissionsMixin):
 		self.save
 
 	def __str__(self):
-		return str(self.id) + str(self.short_name) + "   type: " + str(self.user_type)
+		return str(self.short_name)
 
 	EMAIL_FIELD = "email"
 	USERNAME_FIELD = "username"
@@ -157,8 +155,8 @@ class BankAccountData(models.Model):
 	bank_address = models.TextField()
 	banker_1 = models.CharField(blank=False,null=False,max_length=200)
 	banker_2 = models.CharField(blank=True,null=True,max_length=200)
-	reg_date = models.DateTimeField(default=timezone.now)
-	date = models.DateTimeField(blank=False, null=False, default=timezone.now)
+	reg_date = models.DateField(default=timezone.now)
+	date = models.DateField(blank=False, null=False)
 	bank_account = models.CharField(max_length=200)
 	bank_account_holder = models.CharField(max_length=200)
 

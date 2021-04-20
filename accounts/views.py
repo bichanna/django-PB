@@ -12,7 +12,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import DetailView, UpdateView, CreateView, DeleteView, View
 from .forms import UserUpdateForm, UserCreateForm
 from django.contrib.auth.models import User
-from django.shortcuts import resolve_url, reverse, render
+from django.shortcuts import resolve_url, reverse, render, redirect
 from django.urls import reverse_lazy
 from PBSystem.models import User, UserType
 
@@ -36,7 +36,11 @@ class UserCreate(CreateView):
 
 	def get_success_url(self):
 		"""詳細画面にリダイレクトする。"""
-		return reverse("PBSystem:bank_account_data_list",)
+		status = self.request.GET.get('usertype')
+		print("⭐"*10)
+		print(status)
+		url = "%s?usertype={usertype}".format(usertype=status) % reverse("PBSystem:admin_user_list_list")   # <=== how to pass get parameters to another page using reverse
+		return url
 
 
 
@@ -76,12 +80,24 @@ class UserUpdate(OnlyYouMixin,UpdateView):
 		"""
 		return resolve_url("PBSystem:bank_account_data_list",)
 
-class UserDelete(OnlyYouMixin, View):
-	template_name = "PBSystem/admin_user_list_list.html"
-	def get(self, request, *args, **kwargs):
-	
-		User.objects.get(id=kwargs["pk"]).delete()
-		return render(request, self.template_name)
+class UserDelete(OnlyYouMixin, DeleteView):
+	model = User
+	template_name = "accounts/user_delete.html"
+	def get_success_url(self):
+		status = self.request.GET.get('usertype')
+		print("⭐"*10)
+		print(self.request.GET)
+		url = "%s?usertype={usertype}".format(usertype=status) % reverse("PBSystem:admin_user_list_list")
+		return url
+
+
+
+
+
+
+
+
+
 
 
 

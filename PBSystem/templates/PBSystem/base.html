@@ -19,12 +19,16 @@
 				<ul class="navbar-nav mr-auto">
 					<!-- 左にメニューを出すとき-->
 					{% if user.is_authenticated and user.user_type.user_type == "superadmin"%}                                          <!-- 型でしょ-->
-						<li class="nav-item">
+						<li class="nav-item ml-1 mr-1">
 							<a class="nav-link" href="{% url 'PBSystem:admin_user_list_list'%}?usertype=admin">Admin List</a>
 						</li>
 						
-						<li class="nav-item">
+						<li class="nav-item ml-1 mr-1">
 							<a class="nav-link" href="{% url 'PBSystem:admin_user_list_list'%}?usertype=user">User List</a>
+						</li>
+						<!-- ここにcustomer list ボタンを作る (新しいcustomer list 用のページも作る) -->
+						<li class="nav-item ml-1 mr-1">
+							<a class="nav-link" href="{% url 'PBSystem:go-to-customerlist'%}">Customer List</a>
 						</li>
 						
 					{% endif %}
@@ -33,19 +37,19 @@
 				<ul class="navbar-nav">
 					<!-- 右にメニューを出すとき -->
 					{% if user.is_authenticated %}
-						<li class="nav-item">
+						<li class="nav-item ml-2 mr-2">
 							<a class="nav-link" href="{% url 'accounts:user_detail' user.pk %}">User Info</a>
 						</li>
 						
-						<li class="nav-item">
+						<li class="nav-item ml-2 mr-2">
 							<a class="nav-link" href="{% url 'accounts:user_update' user.pk %}">User Info Update</a>
 						</li>
 						
-						<li class="nav-item">
+						<li class="nav-item ml-2 mr-2">
 							<a class="nav-link" href="{% url 'logout'%}">Log Out</a>
 						</li>
 					{% else %}
-						<li class="nav-item">
+						<li class="nav-item ml-2 mr-2">
 							<a class="nav-link" href="{% url 'login'%}">Log In</a>
 						</li>
 					{% endif %}

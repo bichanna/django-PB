@@ -1,0 +1,18 @@
+{% extends "PBSystem/base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+	<form method="post">
+		{% csrf_token %}
+		{% bootstrap_form_errors form type='non_fields' %}
+		<div class="container">
+			<div class="row justify-content-start"><div class="col-6">{% bootstrap_field form.customer_name placeholder="example: Nobuharu Shimazu" %}</div></div>
+			<button type="submit" class="btn btn-primary btn-lg mr-5">Save and Exit</button>
+			<a href="{% url 'PBSystem:newData' %}" type="submit" class="btn btn-primary btn-lg">Create new data</a>
+		</div>
+	</form>
+{% endblock %}
+
+
+
+
