@@ -19,5 +19,5 @@ urlpatterns = [
 	path("bank_account_data/<int:pk>/delete/", views.BankAccountDataDeleteView.as_view(), name="bank_account_data_delete"),
 	path("customer_list/", views.CustomerListListView.as_view(), name="go-to-customerlist"),
 	path("customer_list/<int:pk>/delete/", views.CustomerDeleteView.as_view(), name="customer_deletion"),
-	path("customer_list/<int:pk>/makeaccount/",views.CreateAccountView.as_view(), name="make-account"),
+	path("customer_list/<int:pk>/makeaccount/",views.CreateAccountView.as_view(), name="makeNewAccount"),
 ]

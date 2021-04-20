@@ -61,13 +61,13 @@ class NewCustomer(ModelForm):
 			"customer_name" : "New customer name",
 		}
 
-#class NewAccountForCustomer(ModelForm):
-#	class Meta:
-#		model = BankAccounts
-#		fields = (,)
-#		labels = {
-#
-#		}
+class NewAccountForCustomer(ModelForm):
+	class Meta:
+		model = BankAccounts
+		fields = ("bank_account_number",)
+		labels = {
+			"bank_account_number": "New account",
+		}
 			
 
 

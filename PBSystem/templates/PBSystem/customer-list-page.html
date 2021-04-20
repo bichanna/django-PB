@@ -27,7 +27,7 @@
 				<tr>
 					<th>ID</th>
 					<th>Customer Name</th>
-					<th>Numbers of accounts</th>
+					{% comment %} <th>Numbers of accounts</th> {% endcomment %}
 					<th></th>
 				</tr>
 			</thead>
@@ -36,8 +36,8 @@
 				<tr>
 					<td>{{ data.id }}</td>
 					<td>{{ data.customer_name }}</td>
-					<td></td>
-					<td><button class="btn btn-success" href="{% url 'PBSystem:make-account' data.pk %}" >Make an account</button> | <a  class="btn btn-danger" href="{% url 'PBSystem:customer_deletion' data.pk %}">Delete</a></td>
+					{% comment %} <td></td> {% endcomment %}
+					<td><a class="btn btn-success" href="{% url 'PBSystem:makeNewAccount' data.pk%}">Make an account</a> | <a  class="btn btn-danger" href="{% url 'PBSystem:customer_deletion' data.pk %}">Delete</a></td>
 				</tr>
 				{% endfor %}
 			</tbody>

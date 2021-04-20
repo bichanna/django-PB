@@ -25,6 +25,9 @@ class CustomerList(models.Model):
 
 	def __str__(self):
 		return str(self.customer_name)
+	
+	# def numberOf_bank_accounts(self):
+	# 	return self.bank_accounts.count()
 
 
 
@@ -37,7 +40,7 @@ class BankAccounts(models.Model):
 	"""
 	# foreignkey
 	bank_account_number = models.CharField(max_length=1000)
-	customer_name = models.ForeignKey(CustomerList, on_delete=models.CASCADE)
+	customer_name = models.ForeignKey(CustomerList, on_delete=models.CASCADE, related_name="bank_accounts")
 	match = models.BooleanField(default=False)
 	wether_complete = models.BooleanField(default=False)
 

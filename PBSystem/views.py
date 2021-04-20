@@ -114,6 +114,20 @@ class CustomerListListView(ListView):
 					queryset = queryset
 
 		return queryset
+	
+	""" def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		# context[""] = 
+		print("⭐"*10)
+		for i in CustomerList.objects.all():
+			print(i,type(i))
+		# i = CustomerList.objects.get(customer_name="Nobuharu Shimazu")
+		# print(type(i), i)       # <===== ここから
+		# print(i.numberOf_bank_accounts(self))
+		# numberOfClients = BankAccounts.objects.filter(bank_account_number="account1").count()
+		#print(numberOfClients)
+		return context """
+	
 
 
 
@@ -158,9 +172,9 @@ class CreateAccountView(LoginRequiredMixin, View):
 	model = "BankAccounts"
 	template_name = "PBSysmtem/create-new-account.html"
 	
-	def post(self, request, *args, **kwargs):
-		print("⭐"*10)
-		print(self.kwargs["pk"])   #   <=======  how to request POST?
+	#def post(self, request, *args, **kwargs):
+	#	print("⭐"*10)
+	#	print(self.kwargs["pk"])   #   <=======  how to request POST?
 
 
 createaccount = CreateAccountView.as_view()
