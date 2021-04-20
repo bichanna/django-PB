@@ -6,11 +6,11 @@
 	Written by Nobuharu Shimazu
 """
 
-from django.shortcuts import render, reverse, get_object_or_404
+from django.shortcuts import render, reverse, get_object_or_404, redirect
 from django.views.generic import View,ListView,DeleteView,UpdateView, CreateView
 from django.utils import timezone
-from .models import CustomerList,BankAccounts,Banks,UserType,User,BankAccountData
-from .forms import BankAccountDataSearchForm,BankAccountDataForm
+from .models import *
+from .forms import *
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
 """
@@ -32,8 +32,8 @@ class PBSystemBankAccountDataListView(ListView):
 		Get Request用の処理
 	"""
 	model = BankAccountData
-	template_name = "PBsystem/bank_account_data_list.html"
-	paginate_by = 8
+	template_name = "PBSystem/bank_account_data_list.html"
+	paginate_by = 10
 
 
 	def get_queryset(self):
@@ -41,7 +41,7 @@ class PBSystemBankAccountDataListView(ListView):
 			検索条件の設定
 		"""
 		#フォームを設定。
-		form = BankAccountDataSearchForm(self.request.GET or None)
+		form = SearchForm(self.request.GET or None)
 		self.form = form
 
 		queryset = super().get_queryset()
@@ -61,7 +61,6 @@ class PBSystemBankAccountDataListView(ListView):
 
 		context = super().get_context_data(**kwargs)
 		context["form"] = self.form
-		print("CONTEXT  ", context)
 		return context
 
 bank_account_data_list = PBSystemBankAccountDataListView.as_view()
@@ -77,9 +76,9 @@ class AdminUserListListView(ListView):
 
 	def get_queryset(self):
 		status = self.request.GET.get('usertype')
-		print(status, "⭐"*10)
 		queryset = super().get_queryset()
 		queryset = queryset.filter(user_type__user_type=status)
+		
 		return queryset
 
 	def get_context_data(self, **kwargs):
@@ -90,23 +89,40 @@ class AdminUserListListView(ListView):
 		context = super().get_context_data(**kwargs)
 		status = self.request.GET.get('usertype')
 		context["status"] = status
-		#print("CONTEXT  ", context)
 		return context
 admin_user_list_list = AdminUserListListView.as_view()
 
 
+class CustomerListListView(ListView):
+	"""
+		the page of customer list 
+	"""
+	model = CustomerList
+	template_name = "PBSystem/customer-list-page.html"
+	paginate_by = 10
+	form_class = SearchForm
+	def get_queryset(self):
+		form = SearchForm(self.request.GET or None)
+		self.form = form
+
+		queryset = super().get_queryset()
+		if form.is_valid():
+			key_word = form.cleaned_data.get('key_word')
+			if key_word:
+				for word in key_word.split():
+					#queryset = queryset.filter(customer_name__icontains=word)
+					queryset = queryset
+
+		return queryset
 
 
-class CreateNewCustomerView(LoginRequiredMixin, CreateView):
+
+class CreateNewDataView(LoginRequiredMixin, CreateView):
 	model = "BankAccountData"
-	template_name = "PBSystem/new_customer_creation.html"
+	template_name = "PBSystem/new_data_creation.html"
 	form_class = BankAccountDataForm
 
 	def form_valid(self, form):
-		print("⭐"*10)
-		print(self.request.user.id)
-		print(User.objects.get(id=self.request.user.id))
-		print(form.instance)
 		user_id = User.objects.get(id=self.request.user.id)
 
 		form.instance.user_info = user_id
@@ -116,28 +132,54 @@ class CreateNewCustomerView(LoginRequiredMixin, CreateView):
 		"""詳細画面にリダイレクトする。"""
 		return reverse("PBSystem:bank_account_data_list",)
 
-
-
-create_new_customer = CreateNewCustomerView.as_view()
+create_new_data = CreateNewDataView.as_view()
 
 
 
-class BankAccountDataDelete(LoginRequiredMixin, DeleteView):
+class CreateNewCustomerView(LoginRequiredMixin, CreateView):
+	model = "CustomerList"
+	template_name = "PBSystem/new-customer-registration.html"
+	form_class = NewCustomer
+	def form_valid(self, form):
+		form.instance.save()
+		customer_name = form.instance
+		accountData = BankAccounts(bank_account_number="account1", customer_name=customer_name)
+		accountData.save()
+		return super().form_valid(form)
+
+	def get_success_url(self):
+		"""詳細画面にリダイレクトする。"""
+		return reverse("PBSystem:go-to-customerlist",)
+
+register_new_customer = CreateNewCustomerView.as_view()
+
+
+class CreateAccountView(LoginRequiredMixin, View):
+	model = "BankAccounts"
+	template_name = "PBSysmtem/create-new-account.html"
+	
+	def post(self, request, *args, **kwargs):
+		print("⭐"*10)
+		print(self.kwargs["pk"])   #   <=======  how to request POST?
+
+
+createaccount = CreateAccountView.as_view()
+
+
+
+class BankAccountDataDeleteView(DeleteView,LoginRequiredMixin):
+	template_name = "PBSystem/bank_account_data_list_delete.html"
 	model = BankAccountData
-	template_name = "PBSystem/bank_account_data_delete.html"
 	def get_success_url(self):
 		"""一覧ページにリダイレクトする。"""
 		return reverse("PBSystem:bank_account_data_list")
 
 
-
-
-
-
-
-
-
-
+class CustomerDeleteView(DeleteView, LoginRequiredMixin):
+	template_name = "PBSystem/customerDeletion.html"
+	model = CustomerList
+	def get_success_url(self):
+		return reverse("PBSystem:go-to-customerlist")
 
 
 

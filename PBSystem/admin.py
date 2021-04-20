@@ -10,15 +10,13 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.utils.translation import ugettext_lazy as _
-from .models import CustomerList,BankAccounts,Banks,UserType,User,BankAccountData
+from .models import BankAccounts,Banks,UserType,User,BankAccountData,CustomerList
 
-
-admin.site.register(CustomerList)
 admin.site.register(BankAccounts)
 admin.site.register(Banks)
 admin.site.register(UserType)
 admin.site.register(BankAccountData)
-
+admin.site.register(CustomerList)
 
 class MyUserChangeForm(UserChangeForm):
     class Meta:

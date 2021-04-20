@@ -52,8 +52,8 @@ body {
 .navbar-light .navbar-nav .nav-link {
 	background-color: rgba(190, 190, 190, 1); /* gray */
 	color: rgba(255,255,255,1);  /* white */
-	transition: background-color 0.2s;
-	transition: color 0.2s;
+	transition: background-color 0.8s;
+	transition: color 0.5s;
 	border-radius: 10px;
 }
 
@@ -86,4 +86,10 @@ body {
 .bank_account_data h2 a, .post h2 a:visited {
 	color: #bebebe; /* gray*/
 }
+
+
+
+
+
+
 

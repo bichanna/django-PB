@@ -116,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en'   # vi = Vietnamese  ja=Japanese
 
-TIME_ZONE = 'Asia/Ho_Chi_Minh'
+TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True
 
@@ -137,6 +137,7 @@ LOGOUT_REDIRECT_URL = "/"
 
 AUTH_USER_MODEL = "PBSystem.User"
 
+DATE_INPUT_FORMATS = ['%d/%m/%Y']
 
 
 

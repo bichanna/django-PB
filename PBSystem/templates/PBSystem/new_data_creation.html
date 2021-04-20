@@ -1,0 +1,29 @@
+{% extends "PBSystem/base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+	<form method="post">
+		{% csrf_token %}
+		{% bootstrap_form_errors form type='non_fields' %}
+		<div class="container">
+			<div class="row justify-content-start"><div class="col-6">{% bootstrap_field form.bank_accounts%}</div></div>
+			<!--
+			<div class="row justify-content-start"><div class="caution"><div class="col">- Giữa đơn vị hành chính nhập “phẩy (,)” và một khoản cách. Sau con số không nhập “phẩy (,)”. Ví dụ: 26 Lệ Lợi, Thái Bình </div></div></div>
+			<div class="row justify-content-start"><div class="caution"><div class="col">- Khi nhập địa chỉ, không nhập tên phân loại như "xã", "quận", "tỉnh" v.v.</div></div></div>
+			<div class="row justify-content-start"><div class="caution"><div class="col">- Nếu trên tài liệu không có tên người phía ngân hàng, không cần nhập.</div></div></div>
+			-->
+			
+			<div class="row justify-content-center"><div class="col-6">{% bootstrap_field form.banks %}</div></div>
+			<div class="row justify-content-center"><div class="col-6">{% bootstrap_field form.bank_branch_name placeholder="" %}</div></div> <!-- あとでplaceholderのとこにベトナム語でexp: natokanantokaとかく-->
+			<div class="row justify-content-center"><div class="col-6">{% bootstrap_field form.bank_address placeholder="Địa chỉ chi nhánh" %}</div></div>
+			<div class="row justify-content-center"><div class="col-6">{% bootstrap_field form.bank_account placeholder="Số tài khoản" %}</div></div>
+			<div class="row justify-content-center"><div class="col-6">{% bootstrap_field form.bank_account_holder placeholder="Chủ tài khỏan" %}</div></div>
+			
+			<div class="row justify-content-end"><div class="col-6">{% bootstrap_field form.banker_1 placeholder="Tên người phía ngân hàng 1" %}</div></div>
+			<div class="row justify-content-end"><div class="col-6">{% bootstrap_field form.banker_2 placeholder="Tên người phía ngân hàng 2" %}</div></div>
+			<div class="row justify-content-end"><div class="col-6">{% bootstrap_field form.date placeholder="Ngày tháng năm" %}</div></div>
+			<button type="submit" class="btn btn-primary btn-lg mr-5">Save and Exit</button>
+			<!--<a href="#" class="btn btn-primary btn-lg">Create new data</a>-->
+		</div>
+	</form>
+{% endblock %}
