@@ -27,8 +27,7 @@
 				<tr>
 					<th>ID</th>
 					<th>Customer Name</th>
-					{% comment %} <th>Numbers of accounts</th> {% endcomment %}
-					<th></th>
+					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -36,9 +35,10 @@
 				<tr>
 					<td>{{ data.id }}</td>
 					<td>{{ data.customer_name }}</td>
-					{% comment %} <td></td> {% endcomment %}
-					<td><a class="btn btn-success" href="{% url 'PBSystem:makeNewAccount' data.pk%}">Make an account</a> | <a  class="btn btn-danger" href="{% url 'PBSystem:customer_deletion' data.pk %}">Delete</a></td>
-				</tr>
+					<td>
+						<a href="{% url 'PBSystem:makeNewAccount'%}?i={{ data.id }}" class="btn btn-success">New Account</a> | <a  class="btn btn-danger" href="{% url 'PBSystem:customer_deletion' data.pk %}">Delete</a>
+					</td>
+				</tr>  <!--  get parameter   ?name={{data.customer_name}} -->
 				{% endfor %}
 			</tbody>
 		</table>

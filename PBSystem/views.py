@@ -114,25 +114,14 @@ class CustomerListListView(ListView):
 					queryset = queryset
 
 		return queryset
-	
-	""" def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
-		# context[""] = 
-		print("⭐"*10)
-		for i in CustomerList.objects.all():
-			print(i,type(i))
-		# i = CustomerList.objects.get(customer_name="Nobuharu Shimazu")
-		# print(type(i), i)       # <===== ここから
-		# print(i.numberOf_bank_accounts(self))
-		# numberOfClients = BankAccounts.objects.filter(bank_account_number="account1").count()
-		#print(numberOfClients)
-		return context """
+
+customerlist_list = CustomerListListView.as_view()
 	
 
 
 
 class CreateNewDataView(LoginRequiredMixin, CreateView):
-	model = "BankAccountData"
+	model = BankAccountData
 	template_name = "PBSystem/new_data_creation.html"
 	form_class = BankAccountDataForm
 
@@ -140,6 +129,8 @@ class CreateNewDataView(LoginRequiredMixin, CreateView):
 		user_id = User.objects.get(id=self.request.user.id)
 
 		form.instance.user_info = user_id
+		# print("⭐"*10)
+		# print(type(form.instance))
 		return super().form_valid(form)
 
 	def get_success_url(self):
@@ -168,16 +159,30 @@ class CreateNewCustomerView(LoginRequiredMixin, CreateView):
 register_new_customer = CreateNewCustomerView.as_view()
 
 
-class CreateAccountView(LoginRequiredMixin, View):
-	model = "BankAccounts"
-	template_name = "PBSysmtem/create-new-account.html"
+class CreateBankAccountView(LoginRequiredMixin, CreateView):
+	model = BankAccounts
+	template_name = "PBSystem/create-new-account.html"
+	form_class = NewAccount
+
+	def form_valid(self, form):
+		# print("⭐"*10)
+		# customerName = CustomerList.objects.get(id=self.request.GET.get("i"))
+		# newBankAccount = "account"+str(BankAccounts.objects.filter(customer_name=customerName).count()+1)
+		
+		# newBankAccountSave = BankAccounts(bank_account_number=newBankAccount, customer_name=customerName)
+		# print(customerName, type(customerName))
+		# print(newBankAccount, type(newBankAccount))
+		# newBankAccountSave.save()
+		form.instance.customer_name = CustomerList.objects.get(id=self.request.GET.get("i"))
+		form.instance.bank_account_number = "account"+str(BankAccounts.objects.filter(customer_name=form.instance.customer_name).count()+1)
+		return super().form_valid(form)
 	
-	#def post(self, request, *args, **kwargs):
-	#	print("⭐"*10)
-	#	print(self.kwargs["pk"])   #   <=======  how to request POST?
+	def get_success_url(self):
+		"""詳細画面にリダイレクトする。"""
+		return reverse("PBSystem:go-to-customerlist",)
 
 
-createaccount = CreateAccountView.as_view()
+createaccount = CreateBankAccountView.as_view()
 
 
 
