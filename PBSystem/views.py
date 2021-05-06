@@ -172,6 +172,16 @@ class CreateBankAccountView(LoginRequiredMixin, CreateView):
 	def get_success_url(self):
 		"""詳細画面にリダイレクトする。"""
 		return reverse("PBSystem:go-to-customerlist",)
+	
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		ID = self.request.GET.get("i")
+		name = str(CustomerList.objects.get(id=ID))
+		# print("⭐"*10)
+		# print(name, type(name))
+		context["name"] = name
+		return context
+
 
 
 createaccount = CreateBankAccountView.as_view()
