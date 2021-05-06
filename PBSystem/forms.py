@@ -61,15 +61,11 @@ class NewCustomer(ModelForm):
 			"customer_name" : "New customer name",
 		}
 
-class NewAccountForCustomer(ModelForm):
+class NewAccount(ModelForm):
 	class Meta:
 		model = BankAccounts
-		fields = ("bank_account_number",)
-		labels = {
-			"bank_account_number": "New account",
-		}
-			
-
+		fields = ("match","wether_complete")
+		
 
 
 
