@@ -6,7 +6,7 @@
 {% block content %}
 <form method="post">
 	{% csrf_token %}
-	<h2>Create a new account for {{createaccount_create.customer_name}}?</h2>
+	<h2>Create a new account for <strong>{{name}}</strong>?</h2>
 	<button type="submit" class="btn btn-success btn-lg">Create</button>
 </form>
 <div class="mt-3 mb-5">

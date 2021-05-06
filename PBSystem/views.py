@@ -165,14 +165,6 @@ class CreateBankAccountView(LoginRequiredMixin, CreateView):
 	form_class = NewAccount
 
 	def form_valid(self, form):
-		# print("⭐"*10)
-		# customerName = CustomerList.objects.get(id=self.request.GET.get("i"))
-		# newBankAccount = "account"+str(BankAccounts.objects.filter(customer_name=customerName).count()+1)
-		
-		# newBankAccountSave = BankAccounts(bank_account_number=newBankAccount, customer_name=customerName)
-		# print(customerName, type(customerName))
-		# print(newBankAccount, type(newBankAccount))
-		# newBankAccountSave.save()
 		form.instance.customer_name = CustomerList.objects.get(id=self.request.GET.get("i"))
 		form.instance.bank_account_number = "account"+str(BankAccounts.objects.filter(customer_name=form.instance.customer_name).count()+1)
 		return super().form_valid(form)
@@ -180,6 +172,16 @@ class CreateBankAccountView(LoginRequiredMixin, CreateView):
 	def get_success_url(self):
 		"""詳細画面にリダイレクトする。"""
 		return reverse("PBSystem:go-to-customerlist",)
+	
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		ID = self.request.GET.get("i")
+		name = str(CustomerList.objects.get(id=ID))
+		# print("⭐"*10)
+		# print(name, type(name))
+		context["name"] = name
+		return context
+
 
 
 createaccount = CreateBankAccountView.as_view()
